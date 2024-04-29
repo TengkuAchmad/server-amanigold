@@ -22,8 +22,9 @@ app.use(compression())
 
 // APP ROUTES
 const api_routes = require('../app/routes/api.routes')
+const user_routes = require('../app/routes/user.routes')
 
-const endpoints = [ api_routes ]
+const endpoints = [ api_routes, user_routes ]
 
 app.use('/.netlify/functions/api', endpoints)
 
