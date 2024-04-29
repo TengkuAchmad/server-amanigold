@@ -77,3 +77,14 @@ exports.signup = async (req, res) => {
     }
 
 }
+
+exports.deleteAll = async(req, res) => {
+    try {
+        await prisma.userAccount.deleteMany({});
+
+        return res.status(200).json({message : "All user account successfully deleted"});
+    
+    } catch (error) {
+        return res.status(500).json({error : "An error occured" + error});
+    }
+}
