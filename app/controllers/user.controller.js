@@ -20,7 +20,7 @@ exports.auth = async (req, res) => {
             });
         }
 
-        const user = await userAccount.findUnique({
+        const user = await prisma.userAccount.findUnique({
             where: {
                 Email_UA: req.body.email
             }
