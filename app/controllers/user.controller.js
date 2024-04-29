@@ -42,7 +42,7 @@ exports.auth = async (req, res) => {
             });
         }
     } catch (error) {
-        return res.status(500).send({ message: "An error occured", error });
+        return res.status(500).send({ message: "An error occured" + error });
     }
 }
 
