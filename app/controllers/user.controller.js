@@ -46,6 +46,32 @@ exports.auth = async (req, res) => {
     }
 }
 
+exports.findOne = async(req, res) => {
+    try {
+        const id = req.locals.user
+
+        const responseData = await prisma.user_Account.findUnique({
+            where : {
+                UUID_UA: id,
+                isUser_UA: true,
+                isAdmin_UA: false,
+                isSuperAdmin_UA: false,
+            }, select : {
+                UUID_UA: true,
+                Name_UA: true,
+                Email_UA: true,
+                Phone_UA: true,
+                Photo_UA: true,
+            }
+        });
+
+        return res.status(200).json(responseData);
+
+    } catch (error){
+        return res.status(500).json({error: "An error occured" + error});
+    }
+}
+
 exports.signup = async (req, res) => {
     try {
         if (!req.body.email || !req.body.password || !req.body.phone || !req.body.name) {
