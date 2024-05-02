@@ -50,7 +50,7 @@ exports.findOne = async(req, res) => {
     try {
         const id = req.locals.user
 
-        const responseData = await prisma.user_Account.findUnique({
+        const responseData = await prisma.userAccount.findUnique({
             where : {
                 UUID_UA: id,
                 isUser_UA: true,
