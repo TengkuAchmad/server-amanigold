@@ -7,9 +7,9 @@ const { PrismaClient }  = require('@prisma/client');
 const { v4: uuidv4 }    = require('uuid');
 
 // CONSTANT IMPORT
-const SPACES_URL        = process.env.SPACES_URL;
-const SPACES_ACCESS_KEY = process.env.SPACES_ACCESS_KEY;
-const SPACES_SECRET_KEY = process.env.SPACES_SECRET_KEY;
+const { SPACES_URL }        = process.env;
+const { SPACES_ACCESS_KEY } = process.env;
+const { SPACES_SECRET_KEY } = process.env;
 
 // ORM
 const prisma            = new PrismaClient();
