@@ -23,7 +23,7 @@ app.use(compression())
 // APP ROUTES
 const api_routes = require('../app/routes/api.routes')
 const user_routes = require('../app/routes/user.routes')
-const content_routes = require('../app/routes/content.test.routes')
+const content_routes = require('../app/routes/content.routes')
 
 const endpoints = [ api_routes, user_routes, content_routes ]
 

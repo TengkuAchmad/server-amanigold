@@ -38,7 +38,7 @@ const uploadFile = multer({
 });
 
 // CONTROLLER
-exports.upload = async (req, res) => {
+exports.upload = uploadFile.single('file'), async (req, res) => {
     try {
         if(!req.file){
             return res.status(400).json({ message: "File tidak ditemukan!"});
