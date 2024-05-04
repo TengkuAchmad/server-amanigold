@@ -10,6 +10,6 @@ const { uploadMiddleware }  = require("../middleware/middleware.multer")
 const content_controller = require("../controllers/content.controller")
 
 // ROUTER CONFIGURATION
-router.post('/content-management', uploadMiddleware.any() , content_controller.upload);
+router.post('/content-management' , content_controller.upload);
 
 module.exports = router

@@ -14,9 +14,7 @@ const upload            = multer()
 
 app.use(cors({ origin:true, credentials:true }));
 
-app.use(bodyParser.json({
-    type: ["application/x-www-form-urlencoded", "multipart/form-data", "application/json"]
-}))
+app.use(bodyParser.json())
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
