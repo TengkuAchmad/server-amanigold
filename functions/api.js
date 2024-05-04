@@ -6,10 +6,11 @@ const bodyParser        = require('body-parser');
 const cors              = require('cors');
 const compression       = require('compression');
 const cookieParser      = require('cookie-parser');
-const upload            = require('multer');
+const multer            = require('multer');
 
 // APP CONFIG
 const app               = express();
+const upload            = multer()
 
 app.use(cors({ origin:true, credentials:true }));
 
