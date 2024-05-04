@@ -1,15 +1,13 @@
 // LIBRARY IMPORT
 const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3")
-// const AWS       = require('aws-sdk')
-// const multer    = require('multer')
-// const upload    = multer()
+const { PrismaClient }  = require('@prisma/client');
+const { v4: uuidv4 }    = require('uuid');
 
 // CONSTANT IMPORT
 const { SPACES_URL, SPACES_ACCESS_KEY, SPACES_SECRET_KEY }  = process.env
 
-// AWS CONFIGURATION
-// const spacesEndpoint    = new AWS.Endpoint(SPACES_URL)
-// const s3                = new AWS.S3({ endpoint: spacesEndpoint, accessKeyId: SPACES_ACCESS_KEY, secretAccessKey: SPACES_SECRET_KEY })
+// ORM
+const prisma            = new PrismaClient();
 
 const s3Client          = new S3Client({
     endpoint: SPACES_URL,
@@ -44,15 +42,20 @@ exports.upload = async (req, res) => {
 
         const data = await s3Client.send(new PutObjectCommand(params))
 
-        return res.json({ url: data.Location})
-        
-        // s3.upload(params, (err, data) => {
-        //     if (err) {
-        //         return res.status(500).json({ error: 'Failed to upload file' + err });
-        //     }
+        const url  = params.Bucket + '/' + params.Key
 
-        //     return res.json({ url: data.Location})
-        // })
+        await prisma.contentData.create({
+            data: {
+                UUID_CD: uuidv4(),
+                Url_CD: url,
+                Title_CD: req.body.title,
+                Description_CD: req.body.description,
+                isActive_CD: true
+            }
+        })
+
+        return res.json({ message: 'File uploaded successfully', url })
+        
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
