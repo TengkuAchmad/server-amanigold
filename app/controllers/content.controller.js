@@ -4,7 +4,7 @@ const { PrismaClient }  = require('@prisma/client');
 const { v4: uuidv4 }    = require('uuid');
 
 // CONSTANT IMPORT
-const { SPACES_URL, SPACES_ACCESS_KEY, SPACES_SECRET_KEY }  = process.env
+const { SPACES_URL, SPACES_ACCESS_KEY, SPACES_SECRET_KEY, SPACES_PUBLIC }  = process.env
 
 // ORM
 const prisma            = new PrismaClient();
@@ -43,7 +43,7 @@ exports.upload = async (req, res) => {
 
         const data = await s3Client.send(new PutObjectCommand(params))
 
-        const url  = params.Bucket + '/' + params.Key
+        const url  = SPACES_PUBLIC + '/' + params.Key
 
         await prisma.contentData.create({
             data: {
