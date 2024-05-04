@@ -14,7 +14,7 @@ const { SPACES_URL, SPACES_ACCESS_KEY, SPACES_SECRET_KEY }  = process.env
 const s3Client          = new S3Client({
     endpoint: SPACES_URL,
     forcePathStyle: false,
-    region: 'sgp-1',
+    region: 'sgp1',
     credentials: {
         accessKeyId: SPACES_ACCESS_KEY,
         secretAccessKey: SPACES_SECRET_KEY
