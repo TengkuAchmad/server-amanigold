@@ -88,8 +88,27 @@ exports.findOne = async (req, res) => {
 
 exports.deleteAll = async (req, res) => {
     try {
-        const contentData = await prisma.contentData.deleteMany()
-        return res.json(contentData)
+        const listParams = {
+            Bucket: 'amanigoldbuckets'
+        }
+
+        const data = await s3Client.send(new ListObjectsCommand(listParams))
+
+        const files = data.Contents.map(file => file.Key)
+
+        await Promise.all(files.map(async file => {
+            const params = {
+                Bucket: 'amanigoldbuckets',
+                Key: file
+            }
+
+            await s3Client.send(new DeleteObjectCommand(params))
+        }))
+
+        await prisma.contentData.deleteMany()
+        
+        return res.status(200).json({ message: "All files deleted successfully" })
+
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
@@ -125,7 +144,7 @@ exports.deleteOne = async (req, res) => {
         })
 
         return res.json({ message: 'File deleted successfully' })
-        
+
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
