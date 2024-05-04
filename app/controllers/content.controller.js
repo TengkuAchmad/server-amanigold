@@ -1,13 +1,15 @@
 // LIBRARY IMPORT
+const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 const AWS       = require('aws-sdk')
 const multer    = require('multer')
 const upload    = multer()
 
-// AWS CONFIGURATION
-const spacesEndpoint    = new AWS.Endpoint('https://spaces.storage.googleapis.com')
-
 // CONSTANT IMPORT
 const { SPACES_URL, SPACES_ACCESS_KEY, SPACES_SECRET_KEY }  = process.env
+
+// AWS CONFIGURATION
+const spacesEndpoint    = new AWS.Endpoint(SPACES_URL)
+
 
 const s3                = new AWS.S3({ endpoint: spacesEndpoint, accessKeyId: SPACES_ACCESS_KEY, secretAccessKey: SPACES_SECRET_KEY })
 
