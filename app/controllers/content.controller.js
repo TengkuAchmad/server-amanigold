@@ -1,5 +1,5 @@
 // LIBRARY IMPORT
-const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3")
+const { PutObjectCommand, DeleteObjectCommand, S3Client } = require("@aws-sdk/client-s3")
 const { PrismaClient }  = require('@prisma/client');
 const { v4: uuidv4 }    = require('uuid');
 
@@ -98,12 +98,34 @@ exports.deleteAll = async (req, res) => {
 exports.deleteOne = async (req, res) => {
     try {
         const { uuid } = req.params
-        const contentData = await prisma.contentData.delete({
-            where: {
+
+        const fileData = await prisma.contentData.findUnique({
+            where:{
                 UUID_CD: uuid
             }
         })
-        return res.json(contentData)
+
+        if (!fileData) {
+            return res.status(404).json({ error: 'File not found' })
+        }
+
+        const filename = fileData.Filename_CD
+
+        const params = {
+            Bucket: "amanigoldbuckets",
+            Key: `content/${filename}`
+        }
+
+        await s3Client.send(new DeleteObjectCommand(params))
+
+        await prisma.contentData.delete({
+            where:{
+                UUID_CD: uuid
+            }
+        })
+
+        return res.json({ message: 'File deleted successfully' })
+        
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
