@@ -6,6 +6,7 @@ const bodyParser        = require('body-parser');
 const cors              = require('cors');
 const compression       = require('compression');
 const cookieParser      = require('cookie-parser');
+const upload            = require('multer');
 
 // APP CONFIG
 const app               = express();
@@ -19,6 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 app.use(compression())
+
+app.use(upload.any())
 
 // APP ROUTES
 const api_routes = require('../app/routes/api.routes')

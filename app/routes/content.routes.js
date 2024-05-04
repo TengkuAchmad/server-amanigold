@@ -8,6 +8,6 @@ const { authenticateToken } = require("../middleware/middleware")
 const content_controller = require("../controllers/content.controller")
 
 // ROUTER CONFIGURATION
-router.post('/content-management', authenticateToken, content_controller.upload);
+router.post('/content-management', authenticateToken, content_controller.uploadTest);
 
 module.exports = router
