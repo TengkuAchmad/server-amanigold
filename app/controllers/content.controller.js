@@ -61,3 +61,49 @@ exports.upload = async (req, res) => {
         return res.status(500).json({ error: error.message })
     }
 }
+
+exports.findAll = async (req, res) => {
+    try {
+        const contentData = await prisma.contentData.findMany()
+        return res.json(contentData)
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+exports.findOne = async (req, res) => {
+    try {
+        const { uuid } = req.params
+        const contentData = await prisma.contentData.findUnique({
+            where: {
+                UUID_CD: uuid
+            }
+        })
+        return res.json(contentData)
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+exports.deleteAll = async (req, res) => {
+    try {
+        const contentData = await prisma.contentData.deleteMany()
+        return res.json(contentData)
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+exports.deleteOne = async (req, res) => {
+    try {
+        const { uuid } = req.params
+        const contentData = await prisma.contentData.delete({
+            where: {
+                UUID_CD: uuid
+            }
+        })
+        return res.json(contentData)
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
