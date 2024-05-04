@@ -27,6 +27,7 @@ exports.upload = async (req, res) => {
         }
 
         const file = req.files[0]
+        const { title, description } = req.body
 
         const timestamp = Date.now();
         const randomString = Math.random().toString(36).substring(2);
@@ -48,8 +49,8 @@ exports.upload = async (req, res) => {
             data: {
                 UUID_CD: uuidv4(),
                 Url_CD: url,
-                Title_CD: req.body.title,
-                Description_CD: req.body.description,
+                Title_CD: title,
+                Description_CD: description,
                 isActive_CD: true
             }
         })
