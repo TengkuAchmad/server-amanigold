@@ -1,5 +1,5 @@
 // LIBRARY IMPORT
-const { PutObjectCommand, DeleteObjectCommand, S3Client } = require("@aws-sdk/client-s3")
+const { PutObjectCommand, DeleteObjectCommand, ListObjectsCommand,S3Client } = require("@aws-sdk/client-s3")
 const { PrismaClient }  = require('@prisma/client');
 const { v4: uuidv4 }    = require('uuid');
 
