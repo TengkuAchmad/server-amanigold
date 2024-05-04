@@ -36,8 +36,8 @@ exports.upload = async (req, res) => {
         
         
         const params = {
-            Bucket: 'content',
-            Key: secureName,
+            Bucket: 'amanigoldbuckets',
+            Key: `content/${secureName}`,
             Body: file.buffer,
             ACL: 'public-read'
         }
