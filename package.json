@@ -14,7 +14,6 @@
   "author": "TengkuAchmad",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.569.0",
     "@prisma/client": "^5.13.0",
     "argon2": "^0.40.1",
     "aws-sdk": "^2.1613.0",
