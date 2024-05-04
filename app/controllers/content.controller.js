@@ -25,7 +25,7 @@ exports.upload = async (req, res) => {
         
         
         const params = {
-            Bucket: 'amanigoldbuckets',
+            Bucket: SPACES_URL,
             Key: `content/${secureName}`,
             Body: file.buffer,
             ACL: 'public-read'
