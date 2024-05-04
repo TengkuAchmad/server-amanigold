@@ -49,6 +49,7 @@ exports.upload = async (req, res) => {
             data: {
                 UUID_CD: uuidv4(),
                 Url_CD: url,
+                Filename_CD: secureName,
                 Title_CD: title,
                 Description_CD: description,
                 isActive_CD: true

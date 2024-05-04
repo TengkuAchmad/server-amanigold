@@ -29,6 +29,7 @@ model UserAccount {
 model ContentData {
   UUID_CD         String             @id
   Url_CD          String             @unique
+  Filename_CD     String
   Title_CD        String
   Description_CD  String
   isActive_CD     Boolean            @default(true)
