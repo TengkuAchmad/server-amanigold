@@ -1,6 +1,6 @@
 // LIBRARY IMPORT
 const multer = require('multer')
 
-const upload = multer()
+const uploadMiddleware = multer()
 
-module.exports = { upload }
+module.exports = { uploadMiddleware }
