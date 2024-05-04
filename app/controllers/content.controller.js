@@ -25,8 +25,8 @@ exports.upload = async (req, res) => {
         
         
         const params = {
-            Bucket: SPACES_URL,
-            Key: `content/${secureName}`,
+            Bucket: 'content',
+            Key: secureName,
             Body: file.buffer,
             ACL: 'public-read'
         }
