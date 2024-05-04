@@ -41,9 +41,9 @@ exports.upload = async (req, res) => {
             ACL: 'public-read'
         }
 
-        const data = await s3Client.send(new PutObjectCommand(params))
+        await s3Client.send(new PutObjectCommand(params))
 
-        const url  = SPACES_PUBLIC + '/' + params.Key
+        const url  = `${SPACES_PUBLIC}/${params.Key}`
 
         await prisma.contentData.create({
             data: {
