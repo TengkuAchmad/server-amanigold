@@ -90,7 +90,8 @@ exports.signup = async (req, res) => {
                 Email_UA: req.body.email,
                 Password_UA: hashPassword,
                 Name_UA: req.body.name,
-                Phone_UA: req.body.phone
+                Phone_UA: req.body.phone,
+                Photo_UA: "default"
             }
         });
 
