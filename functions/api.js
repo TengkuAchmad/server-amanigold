@@ -25,11 +25,12 @@ app.use(compression())
 app.use(upload.any())
 
 // APP ROUTES
-const api_routes = require('../app/routes/api.routes')
-const user_routes = require('../app/routes/user.routes')
-const content_routes = require('../app/routes/content.routes')
+const api_routes        = require('../app/routes/api.routes')
+const user_routes       = require('../app/routes/user.routes')
+const content_routes    = require('../app/routes/content.routes')
+const gold_routes       = require('../app/routes/gold.routes')
 
-const endpoints = [ api_routes, user_routes, content_routes ]
+const endpoints = [ api_routes, user_routes, content_routes, gold_routes ]
 
 app.use('/.netlify/functions/api', endpoints)
 

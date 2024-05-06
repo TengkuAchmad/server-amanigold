@@ -36,3 +36,13 @@ model ContentData {
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
 }
+
+model GoldData {
+  UUID_GD         String              @id
+  Sell_GD         Float
+  Buy_GD          Float
+  Type_GD         String
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+}
+
