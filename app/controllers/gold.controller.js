@@ -21,10 +21,10 @@ exports.fetchDataGold = async() => {
         
         const { sell, buy, type} = data[0];
         
-        return response.status(200).json(data[0]);
-        
+        return response.status(200).json(response.data);
+
     } catch (error) {
-        console.error("An error occured:", error);
+        return response.status(500).json({ error: error.message })
     }
 }
 
