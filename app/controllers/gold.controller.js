@@ -21,7 +21,8 @@ exports.fetchDataGold = async() => {
         
         const { sell, buy, type} = data[0];
         
-        return response.status(200).message(sell, buy, type);
+        return response.status(200).json(data[0]);
+        
     } catch (error) {
         console.error("An error occured:", error);
     }
