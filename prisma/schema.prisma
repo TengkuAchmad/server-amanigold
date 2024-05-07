@@ -24,6 +24,17 @@ model UserAccount {
   LastLogin_UA    DateTime           @default(now())
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
+  UserData        UserData[]
+}
+
+model UserData {
+  UUID_UD         String            @id
+  UserAccount     UserAccount       @relation(fields: [UUID_UA], references: [UUID_UA])
+  UUID_UA         String            @unique           
+  Gold_UD         Float             @default(0)
+  Balance_UD      Float             @default(0)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
 }
 
 model ContentData {

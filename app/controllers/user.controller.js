@@ -95,6 +95,13 @@ exports.signup = async (req, res) => {
             }
         });
 
+        await prisma.userData.create({
+            data: {
+                UUID_UD: uuidv4(),
+                UUID_UA: uuid,
+            }
+        })
+
         return res.status(201).send({
             message: "User created successfully"
         });
