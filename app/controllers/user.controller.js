@@ -56,12 +56,18 @@ exports.findOne = async(req, res) => {
                 isUser_UA: true,
                 isAdmin_UA: false,
                 isSuperAdmin_UA: false,
-            }, select : {
+            },
+            include: {
+                UserData: true
+            },
+            
+            select : {
                 UUID_UA: true,
                 Name_UA: true,
                 Email_UA: true,
                 Phone_UA: true,
                 Photo_UA: true,
+                UserData: true,
             }
         });
 
