@@ -32,8 +32,6 @@ exports.create = async(req, res) => {
             })
 
             return res.status(201).json({ message: 'Gold created successfully' })
-        } else {
-            return res.status(400).json({message : "Data already exist"})
         }
 
     } catch (error) {
