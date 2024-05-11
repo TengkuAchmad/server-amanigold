@@ -29,8 +29,9 @@ const api_routes        = require('../app/routes/api.routes')
 const user_routes       = require('../app/routes/user.routes')
 const content_routes    = require('../app/routes/content.routes')
 const gold_routes       = require('../app/routes/gold.routes')
+const card_routes       = require('../app/routes/card.routes')
 
-const endpoints = [ api_routes, user_routes, content_routes, gold_routes ]
+const endpoints = [ api_routes, user_routes, content_routes, gold_routes, card_routes ]
 
 app.use('/.netlify/functions/api', endpoints)
 

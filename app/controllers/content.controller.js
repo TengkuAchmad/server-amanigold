@@ -86,7 +86,7 @@ exports.findOne = async (req, res) => {
     }
 }
 
-exports.deleteAll = async (req, res) => {
+exports.deleteAll =     async (req, res) => {
     try {
         const listParams = {
             Bucket: 'amanigoldbuckets'

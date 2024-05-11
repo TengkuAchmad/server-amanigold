@@ -25,6 +25,7 @@ model UserAccount {
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
   UserData        UserData[]
+  CardData        CardData[]
 }
 
 model UserData {
@@ -53,6 +54,18 @@ model GoldData {
   Sell_GD         Float
   Buy_GD          Float
   Type_GD         String
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+}
+
+model CardData {
+  UUID_CD         String              @id
+  UserAccount     UserAccount         @relation(fields: [UUID_UA], references: [UUID_UA])
+  UUID_UA         String              
+  Seri_CD         String
+  Weight_CD       Float
+  Form_CD         String
+  Fineness_CD     Float
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
 }
