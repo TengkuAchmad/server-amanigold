@@ -3,34 +3,49 @@ const { PrismaClient }  = require('@prisma/client');
 const { v4: uuidv4 }    = require('uuid');
 const jwt               = require('jsonwebtoken');
 const argon2            = require('argon2');
-const axios             = require('axios');
-
 // ORM
 const prisma            = new PrismaClient();
 
-// GOLD DATA
-const GOLD_URL          = "https://logam-mulia-api.vercel.app/prices/hargaemas-com";
-
-exports.fetchDataGold = async() => {
+exports.create = async(req, res) => {
     try {
-        const response = await axios.get(GOLD_URL);
-        const { data, meta } = response.data;
+        if (!req.body.sell || !req.body.buy || !req.body.type) {
+            return res.status(400).json({ error: 'Missing sell or buy amount' })
+        }
+
+        const { sell, buy, type} = req.body;
         
-        const { sell, buy, type} = data[0];
-        
-        return response.status(200).json(response.data);
+        // CHECKING CURRENT DATA
+        const lastData = await prisma.goldData.findFirst({
+            orderBy: {
+                createdAt: 'desc'
+            }
+        })
+
+        if (!lastData || lastData.sell !== sell || lastData.buy !== buy) {
+            await prisma.goldData.create({
+                data: {
+                    UUID_GD : uuidv4(),
+                    Sell_GD : sell,
+                    Buy_GD : buy,
+                    Type_GD : type
+                }
+            })
+
+            return res.status(201).json({ message: 'Gold created successfully' })
+        } else {
+            return res.status(400).json({message : "Data already exist"})
+        }
 
     } catch (error) {
-        return response.status(500).json({ error: error.message })
+        return res.status(500).json({ error: error})
     }
 }
-
 
 exports.findAll = async(req, res) => {
     try {
         const data = await prisma.goldData.findMany({
             orderBy: {
-                timestamp: 'desc'
+                createdAt: 'desc'
             },
             take: 1
         });
