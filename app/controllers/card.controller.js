@@ -10,7 +10,7 @@ const prisma            = new PrismaClient();
 
 exports.create = async (req, res) => {
     try {
-        if (!req.body.seri || !req.body.weight || !req.body.weight || !req.body.form || !req.body.fineness) {
+        if (!req.body.seri || !req.body.weight || !req.body.form || !req.body.fineness) {
             return res.status(400).send({
                 message: "Invalid request on body"
             })

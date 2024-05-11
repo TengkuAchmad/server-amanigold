@@ -5,9 +5,6 @@ const jwt               = require('jsonwebtoken');
 const argon2            = require('argon2');
 const axios             = require('axios');
 
-// CONSTANT IMPORT
-const { JWT_SECRET }    = process.env;
-
 // ORM
 const prisma            = new PrismaClient();
 
