@@ -37,12 +37,7 @@ exports.create = async (req, res) => {
 
 exports.findAll = async (req, res) => {
     try {
-        const data = await prisma.cardData.findMany({
-            orderBy: {
-                timestamp: 'desc'
-            },
-            take: 1
-        });
+        const data = await prisma.cardData.findMany({});
         
         return res.json(data);
     } catch (error) {
