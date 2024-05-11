@@ -58,3 +58,22 @@ exports.findOne = async (req, res) => {
         return res.status(500).json({ error: error.message })
     }
 }
+
+exports.findUser = async (req, res) => {
+    try {
+        const { uuid } = req.params
+
+        const userData = await prisma.userAccount.findUnique({
+            where: {
+                UUID_UA: uuid
+            },
+            select : {
+                Name_UA: true,
+            }
+        })
+
+        return res.status(200).json(userData);
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+} 
