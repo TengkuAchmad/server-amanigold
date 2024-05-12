@@ -10,7 +10,7 @@ const prisma            = new PrismaClient();
 
 exports.create = async (req, res) => {
     try {
-        if (!req.body.seri || !req.body.weight || !req.body.form || !req.body.fineness) {
+        if (!req.body.user ||!req.body.seri || !req.body.weight || !req.body.form || !req.body.fineness) {
             return res.status(400).send({
                 message: "Invalid request on body"
             })
@@ -19,7 +19,7 @@ exports.create = async (req, res) => {
        await prisma.cardData.create({
             data: {
                 UUID_CD : uuidv4(),
-                UUID_UA : req.body.uuid,
+                UUID_UA : req.body.user,
                 Seri_CD : req.body.seri,
                 Weight_CD : req.body.weight,
                 Form_CD : req.body.form,
@@ -29,7 +29,7 @@ exports.create = async (req, res) => {
 
         await prisma.userData.update({
             where: {
-                UUID_UA: req.body.uuid,
+                UUID_UA: req.body.user,
             }, data: {
                 Gold_UA: req.body.weight,
                 Balance_UA: 0,
