@@ -27,23 +27,32 @@ exports.create = async (req, res) => {
             }
         })
 
+        // PREVIOUS DATA USER
+        const previousUserData = await prisma.userData.findUnique({
+            where: {
+                UUID_UA: req.body.user
+            }
+        });
+
+        const newAmountGold = previousUserData.Gold_UD + req.body.weight;
+
+        const goldPrice = await prisma.goldData.findFirst({
+            orderBy: {
+                createdAt: "desc"
+            }
+        });
+
+        const newAmountBalance = previousUserData.Balance_UD + (newAmountGold * goldPrice.Sell_GD);
+
         const updateUser = await prisma.userData.update({
             where: {
-              UUID_UA: req.body.user,
+                UUID_UA: req.body.user
             },
             data: {
-              Gold_UD: req.body.weight,
-            },
+                Gold_UD: newAmountGold,
+                Balance_UD: newAmountBalance
+            }
         })
-
-        // await prisma.userData.update({
-        //     where: {
-        //         UUID_UA: req.body.user,
-        //     }, data: {
-        //         Gold_UA: req.body.weight,
-        //         Balance_UA: 0,
-        //     }
-        // })
 
         return res.status(201).send({
             message: "Card created successfully"
