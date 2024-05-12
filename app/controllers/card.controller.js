@@ -27,14 +27,14 @@ exports.create = async (req, res) => {
             }
         })
 
-        await prisma.userData.update({
-            where: {
-                UUID_UA: req.body.user,
-            }, data: {
-                Gold_UA: req.body.weight,
-                Balance_UA: 0,
-            }
-        })
+        // await prisma.userData.update({
+        //     where: {
+        //         UUID_UA: req.body.user,
+        //     }, data: {
+        //         Gold_UA: req.body.weight,
+        //         Balance_UA: 0,
+        //     }
+        // })
 
         return res.status(201).send({
             message: "Card created successfully"
