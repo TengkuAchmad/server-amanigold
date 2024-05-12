@@ -32,7 +32,7 @@ exports.create = async (req, res) => {
               UUID_UA: req.body.user,
             },
             data: {
-              Gold_UA: req.body.weight,
+              Gold_UD: req.body.weight,
             },
         })
 
