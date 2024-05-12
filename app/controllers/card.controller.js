@@ -27,6 +27,15 @@ exports.create = async (req, res) => {
             }
         })
 
+        const updateUser = await prisma.userData.update({
+            where: {
+              UUID_UA: req.body.user,
+            },
+            data: {
+              Gold_UA: req.body.weight,
+            },
+        })
+
         // await prisma.userData.update({
         //     where: {
         //         UUID_UA: req.body.user,
