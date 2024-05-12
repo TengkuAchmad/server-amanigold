@@ -19,11 +19,20 @@ exports.create = async (req, res) => {
        await prisma.cardData.create({
             data: {
                 UUID_CD : uuidv4(),
-                UUID_UA : req.locals.user,
+                UUID_UA : req.body.uuid,
                 Seri_CD : req.body.seri,
                 Weight_CD : req.body.weight,
                 Form_CD : req.body.form,
                 Fineness_CD : req.body.fineness
+            }
+        })
+
+        await prisma.userData.update({
+            where: {
+                UUID_UA: req.body.uuid,
+            }, data: {
+                Gold_UA: req.body.weight,
+                Balance_UA: 0,
             }
         })
 
