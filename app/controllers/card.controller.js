@@ -68,6 +68,16 @@ exports.findOne = async (req, res) => {
     }
 }
 
+exports.deleteAll = async (req, res) => {
+    try {
+        await prisma.cardData.deleteMany({});
+
+        return res.status(200).send({message: "Cards deleted successfully"})
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
 exports.findUser = async (req, res) => {
     try {
         const { uuid } = req.params
