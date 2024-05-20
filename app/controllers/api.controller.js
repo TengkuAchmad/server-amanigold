@@ -1,3 +1,9 @@
+// LIBRARY IMPROT
+const jwt = require('jsonwebtoken');
+
+// CONSTANT IMPORT
+const { JWT_SECRET }    = process.env;
+
 exports.test = async(req, res) => {
     try {
         return res.status(200).json({message : "API Status Running"})
