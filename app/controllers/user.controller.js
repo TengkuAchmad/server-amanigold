@@ -114,6 +114,30 @@ exports.signup = async (req, res) => {
 
 }
 
+exports.findAll = async (req, res) => {
+    try {
+        const responseDatas = await prisma.userAccount.findMany({
+            where: {
+                isUser_UA: true,
+                isAdmin_UA: false,
+            },
+            select: {
+                UUID_UA: true,
+                Email_UA: true,
+                Name_UA: true,
+                Phone_UA: true,
+                Photo_UA: true,
+                UserData: true,
+            }
+        });
+
+        return res.status(200).json(responseDatas);
+
+    } catch (error) {
+        return res.status(500).json({error: "An error occured", error});
+    }
+}
+
 exports.deleteAll = async(req, res) => {
     try {
         await prisma.userData.deleteMany({});
