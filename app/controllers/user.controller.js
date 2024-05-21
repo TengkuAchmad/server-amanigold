@@ -142,11 +142,24 @@ exports.deleteOne = async (req, res) => {
     try {
         const {uuid} = req.params;
 
+        await prisma.userData.delete({
+            where: {
+                UUID_UA: uuid
+            }
+        })
+
+        await prisma.cardData.delete({
+            where: {
+                UUID_UA: uuid
+            }
+        })
+
         await prisma.userAccount.delete({
             where: {
                 UUID_UA: uuid
             }
         })
+
         return res.json({ message: "User deleted successfully" });
     } catch (error){
         return res.status(500).json({ error: "An error occured" + error });
