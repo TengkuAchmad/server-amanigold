@@ -148,11 +148,19 @@ exports.deleteOne = async (req, res) => {
             }
         })
 
-        await prisma.cardData.delete({
+        const availableCard = await prisma.cardData.findUnique({
             where: {
                 UUID_UA: uuid
             }
         })
+
+        if (availableCard) {
+            await prisma.cardData.delete({
+                where: {
+                    UUID_UA: uuid
+                }
+            })
+        }
 
         await prisma.userAccount.delete({
             where: {
