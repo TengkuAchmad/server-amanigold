@@ -10,6 +10,7 @@ const user_controller = require("../controllers/user.controller")
 // ROUTER CONFIGURATION
 router.get("/user-management", authenticateToken, user_controller.findOne);
 router.get("/user-management/all", authenticateToken, user_controller.findAll);
+router.put("/user-management/:uuid", authenticateToken, user_controller.update);
 router.delete("/user-management/:uuid", authenticateToken,user_controller.deleteOne);
 router.delete("/user-management", authenticateToken,user_controller.deleteAll);
 router.post("/user-management/auth", user_controller.auth);

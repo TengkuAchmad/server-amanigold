@@ -114,6 +114,40 @@ exports.signup = async (req, res) => {
 
 }
 
+exports.update = async (req, res) => {
+    try {
+        const {uuid} = req.params;
+
+        const user = await prisma.userAccount.findUnique({
+            where: {
+                UUID_UA: uuid
+            }
+        })
+
+        if (user) {
+            const updateData = Object.keys(req.body).reduce((acc, key) => {
+                acc[key] = req.body[key];
+                return acc;
+            }, {});
+
+            await prisma.userAccount.update({
+                where: {
+                    UUID_UA: uuid
+                },
+                data: updateData
+            })
+
+            return res.status(200).json({message: "User updated successfully"});
+        } else {
+            return res.status(404).json({error: "User not found"});
+        }
+        
+    } catch (error) {
+        return res.status(500).json({error: "An error occured", error});
+    }
+}
+
+
 exports.findAll = async (req, res) => {
     try {
         const responseDatas = await prisma.userAccount.findMany({
