@@ -3,7 +3,6 @@ const { PrismaClient }  = require('@prisma/client');
 const { v4: uuidv4 }    = require('uuid');
 const jwt               = require('jsonwebtoken');
 const argon2            = require('argon2');
-const { createKindeClient } = require("@kinde-oss/kinde-auth-nextjs/server")
 
 // CONSTANT IMPORT
 const { JWT_SECRET, KINDE_CLIENT_ID, KINDE_CLIENT_SECRET, KINDE_ISSUER_URL, KINDE_SITE_URL }    = process.env;
@@ -12,69 +11,69 @@ const { JWT_SECRET, KINDE_CLIENT_ID, KINDE_CLIENT_SECRET, KINDE_ISSUER_URL, KIND
 const prisma            = new PrismaClient();
 
 // KINDE CLIENT
-const kindeClient = createKindeClient({
-  client_id: KINDE_CLIENT_ID,
-  client_secret: KINDE_CLIENT_SECRET,
-  issuer_url : KINDE_ISSUER_URL,
-  redirect_url: `${KINDE_SITE_URL}/user-management/callback`
-});
+// const kindeClient = createKindeClient({
+//   client_id: KINDE_CLIENT_ID,
+//   client_secret: KINDE_CLIENT_SECRET,
+//   issuer_url : KINDE_ISSUER_URL,
+//   redirect_url: `${KINDE_SITE_URL}/user-management/callback`
+// });
 
 
 // FUNCTION IMPORT
-exports.googleLogin = async (req, res) => {
-  try {
-    const authUrl = kindeClient.getGoogleLoginUrl();
-    res.redirect(authUrl);
+// exports.googleLogin = async (req, res) => {
+//   try {
+//     const authUrl = kindeClient.getGoogleLoginUrl();
+//     res.redirect(authUrl);
 
-  } catch (error) {
-    res.status(500).send({ message: "An error occurred : " + error.message });
-  }
-}
+//   } catch (error) {
+//     res.status(500).send({ message: "An error occurred : " + error.message });
+//   }
+// }
 
-exports.facebookLogin = async (req, res) => {
-  try {
-    const authUrl = kindeClient.getFacebookLoginUrl();
-    res.redirect(authUrl);
-  } catch (error) {
-    res.status(500).send({ message: "An error occurred : " + error.message });
-  }
-}
+// exports.facebookLogin = async (req, res) => {
+//   try {
+//     const authUrl = kindeClient.getFacebookLoginUrl();
+//     res.redirect(authUrl);
+//   } catch (error) {
+//     res.status(500).send({ message: "An error occurred : " + error.message });
+//   }
+// }
 
-exports.callback = async (req, res) => {
-  try {
-    const tokenSet = await kindeClient.callback(req);
-    const user = await kindeClient.getUser(tokenSet.access_token);
+// exports.callback = async (req, res) => {
+//   try {
+//     const tokenSet = await kindeClient.callback(req);
+//     const user = await kindeClient.getUser(tokenSet.access_token);
 
-    let existingUser = await prisma.userAccount.findUnique({
-      where: { Email_UA: user.email }
-    });
+//     let existingUser = await prisma.userAccount.findUnique({
+//       where: { Email_UA: user.email }
+//     });
 
-    if (!existingUser) {
-      existingUser = await prisma.userAccount.create({
-        data: {
-          UUID_UA: uuidv4(),
-          Email_UA: user.email,
-          Name_UA: user.name,
-          Photo_UA: user.picture,
-          Password_UA: "",
-        }
-      });
+//     if (!existingUser) {
+//       existingUser = await prisma.userAccount.create({
+//         data: {
+//           UUID_UA: uuidv4(),
+//           Email_UA: user.email,
+//           Name_UA: user.name,
+//           Photo_UA: user.picture,
+//           Password_UA: "",
+//         }
+//       });
 
-      await prisma.userData.create({
-        data: {
-          UUID_UA: uuidv4(),
-          UUID_UA: existingUser.UUID_UA,
-        }
-      });
-    }
+//       await prisma.userData.create({
+//         data: {
+//           UUID_UA: uuidv4(),
+//           UUID_UA: existingUser.UUID_UA,
+//         }
+//       });
+//     }
 
-    const accessToken = jwt.sign({ userID: existingUser.UUID_UA}, JWT_SECRET, { expiresIn: '1d'});
+//     const accessToken = jwt.sign({ userID: existingUser.UUID_UA}, JWT_SECRET, { expiresIn: '1d'});
 
-    res.status(200).json({success:true, accessToken})
-  } catch (error) {
-    res.status(500).send({ message: "An error occurred : " + error.message });
-  }
-}
+//     res.status(200).json({success:true, accessToken})
+//   } catch (error) {
+//     res.status(500).send({ message: "An error occurred : " + error.message });
+//   }
+// }
 
 
 exports.auth = async (req, res) => {
