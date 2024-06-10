@@ -79,6 +79,12 @@ exports.signup = async (req, res) => {
             });
         };
 
+        let phone = req.body.phone;
+
+        if(phone == null ) {
+          let phone = "00000000";
+        }
+
         const hashPassword = await argon2.hash(req.body.password);
         
         let uuid            = uuidv4();
@@ -89,7 +95,7 @@ exports.signup = async (req, res) => {
                 Email_UA: req.body.email,
                 Password_UA: hashPassword,
                 Name_UA: req.body.name,
-                Phone_UA: req.body.phone,
+                Phone_UA: phone,
                 Photo_UA: "default"
             }
         });
