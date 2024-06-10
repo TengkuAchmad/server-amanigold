@@ -74,17 +74,15 @@ exports.findOne = async (req, res) => {
 
 exports.signup = async (req, res) => {
   try {
-    if (!req.body.email || !req.body.password || !req.body.name) {
+    const { email, password, name, phone } = req.body;
+
+     if (!email || !password || !name) {
       return res.status(400).send({
         message: "Invalid request on body",
       });
     }
 
-    if (!req.body.phone || req.body.phone === null) {
-      let phone = "0000000";
-    } else {
-      let phone = req.body.phone;
-    }
+    const phoneNumber = phone || "0000000";
 
     const hashPassword = await argon2.hash(req.body.password);
 
@@ -96,7 +94,7 @@ exports.signup = async (req, res) => {
         Email_UA: req.body.email,
         Password_UA: hashPassword,
         Name_UA: req.body.name,
-        Phone_UA: phone,
+        Phone_UA: phoneNumber,
         Photo_UA: "default",
       },
     });
