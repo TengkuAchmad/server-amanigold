@@ -96,20 +96,18 @@ exports.deleteAll = async (req, res) => {
     }
 }
 
-exports.findUser = async (req, res) => {
+exports.findUserCards = async (req, res) => {
     try {
         const { uuid } = req.params
 
-        const userData = await prisma.userAccount.findUnique({
+        const userCardList = await prisma.cardData.findMany({
             where: {
                 UUID_UA: uuid
-            },
-            select : {
-                Name_UA: true,
             }
-        })
+        });
 
-        return res.status(200).json(userData);
+        return res.status(200).json(userCardList);
+        
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
